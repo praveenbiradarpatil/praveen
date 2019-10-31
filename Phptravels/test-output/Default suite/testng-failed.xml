@@ -3,11 +3,12 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="Automation1.Phptravels.hotelsearchtest3">
+      <class name="Automation1.Phptravels.Testcase2">
         <methods>
           <include name="test1"/>
+          <include name="close"/>
         </methods>
-      </class> <!-- Automation1.Phptravels.hotelsearchtest3 -->
+      </class> <!-- Automation1.Phptravels.Testcase2 -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

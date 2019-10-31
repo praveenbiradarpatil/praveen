@@ -1,85 +1,93 @@
+
 package Automation1.Phptravels;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.testng.Assert;
 
-public class Flightsearch extends Launch {
-   static By Flight=By.xpath("//span[contains(text(),'Flights')]");
-   static By From_city=By.xpath("//div[@id='s2id_origin']//span[@class='select2-chosen'][contains(text(),'Enter Location')]");
-   static By From_city1=By.xpath("//*[@id=\"select2-drop\"]/div/input");
-   static By To_city=By.xpath("//div[@id='s2id_destination']//span[@class='select2-chosen'][contains(text(),'Enter Location')]");
-   static By To_city1=By.xpath("//div[@id='s2id_destination']//a[@class='select2-choice select2-default']");
-   static By check_in=By.xpath("//input[@id='departure']");
-   static By guest=By.xpath("//div[@class='col-md-1 form-group go-right col-xs-12']//input[@placeholder='0']");
-   
-   public static void Fillflightdetails() throws InterruptedException
-   {
-	   //fromcity
-	   driver.findElement(Flight).click();
-	   driver.findElement(By.xpath("//button[@id='cookyGotItBtn']")).click();
-	   driver.findElement( From_city).click();
-	   
-	   driver.findElement( From_city1).sendKeys(prop.getProperty("CITYNAME1"));
-	   driver.findElement(From_city1).sendKeys((Keys.DOWN));
-	   Thread.sleep(1000);
-	   driver.findElement(From_city1).sendKeys(Keys.ENTER);
-	   
-	   
-	 //tocity
-	   driver.findElement(To_city).click();
-	   driver.findElement(To_city1).sendKeys(prop.getProperty("CITYNAME2"));
-	   driver.findElement(To_city1).sendKeys((Keys.DOWN));
-	   Thread.sleep(1000);
-	   driver.findElement(To_city1).sendKeys(Keys.ENTER);
-	   
-	 //check_in
-	   driver.findElement(check_in).click();
-		
-		//String month="December 2019";
-		//String day="20";
-	
-		Thread.sleep(2000);
-	while(true)	
-	{
-	String text=driver.findElement(By.xpath("//div[16]//div[1]//tr[1]//th[2]")).getText();
-	if(text.equals(prop.getProperty("checkin_month1")))
-	{
-		break;
-	}
-	else
-	{
-		driver.findElement(By.xpath("//div[16]//div[1]//tr[1]//th[3]")).click();
-	}
-	}
-		
-		driver.findElement(By.xpath("//div[16]//tr//td[contains(text(),"+prop.getProperty("checkin_day1")+")]")).click();
-		//driver.findElement(By.xpath("//button[@id='cookyGotItBtn']")).click();
-        
-		//guest
-		driver.findElement(guest).click();
-		Thread.sleep(1000);
-		driver.findElement(By.xpath("//select[@id='madult']")).click();
-		driver.findElement(By.xpath("//select[@id='madult']//option[contains(text(),"+prop.getProperty("adultno")+")]")).click();
-		driver.findElement(By.xpath("//select[@id='mchildren']")).click();
-		driver.findElement(By.xpath("//select[@id='mchildren']//option[contains(text(),"+prop.getProperty("childrenno")+")]")).click();
-		//driver.findElement(By.xpath("//select[@id='minfant']")).click();
-		//driver.findElement(By.xpath("//select[@id='minfant']//option[contains(text(),"+prop.getProperty("infant")+")]")).click();
-		driver.findElement(By.xpath("//button[@id='sumManualPassenger']")).click();
-		Thread.sleep(1000);
-	
-		driver.findElement(By.xpath("//button[@class='btn-primary btn btn-lg btn-block pfb0']")).click();
-		
-		
-	   
-	   
-	 
-   }
-	
-	
+import Automation1.Phptravels.Launch;
 
-	/*public static void main(String[] args) throws Exception {
-	  Lounchbrowser();
-      Fillflightdetails();
-	}*/
 
+public class Flightsearch extends Launch{
+      static By Flight=By.xpath("//a[contains(@class,'text-center flights')]");
+       static By From_city=By.xpath("//div[@id='s2id_location_from']");
+       static By From_city1=By.xpath("//div[@id='s2id_location_from']//a[@class='select2-choice']");
+       static By To_city=By.xpath("//div[@id='s2id_location_to']");
+       static By To_city1=By.xpath("//div[@id='s2id_location_to']//a[@class='select2-choice']");
+       static By check_in=By.xpath("//input[@id='departure']");
+      
+       public static void Fillflightdetails() throws InterruptedException
+       {
+    	   PropertyConfigurator.configure("C:\\Users\\Online Test\\git\\praveen\\Phptravels\\src\\main\\resource\\log4j.properties");
+           //fromcity
+         
+           driver.findElement(Flight).click();
+           //driver.findElement(By.xpath("//button[@id='cookyGotItBtn']")).click();
+           driver.findElement(From_city).click();
+           
+           driver.findElement( From_city1).sendKeys(prop.getProperty("CITYNAME1"));
+           driver.findElement(From_city1).sendKeys((Keys.DOWN));
+           Thread.sleep(1000);
+           driver.findElement(From_city1).sendKeys(Keys.ENTER);
+           log.info("enterinng from city field");
+           
+         //tocity
+           driver.findElement(To_city).click();
+           driver.findElement(To_city1).sendKeys(prop.getProperty("CITYNAME2"));
+           driver.findElement(To_city1).sendKeys((Keys.DOWN));
+           Thread.sleep(1000);
+           driver.findElement(To_city1).sendKeys(Keys.ENTER);
+           log.info("enterinng to city field");
+           
+           
+           //date
+           driver.findElement(By.xpath("//input[@id='FlightsDateStart']")).click();
+           driver.findElement(By.xpath("//div[7]//nav[1]//div[2]")).click();
+           driver.findElement(By.xpath("//div[contains(text(),'Nov')]")).click();
+           for(int i = 1 ; i<=35 ; i++) {           
+                String str1 = driver.findElement(By.xpath("//div[7]//div[1]//div[1]//div[2]//div["+i+"]")).getText();           
+                if(str1.equals("1")) {               
+                    for(int j = i ; j<=35 ; j++) {                   
+                        str1 = driver.findElement(By.xpath("//div[7]//div[1]//div[1]//div[2]//div["+j+"]")).getText();                                       
+                        if(str1.equals(prop.getProperty("Tday"))) {                       
+                            driver.findElement(By.xpath("//div[7]//div[1]//div[1]//div[2]//div["+j+"]")).click();                       
+                            break;
+                            }    
+                        }
+                    }
+               }
+           log.info("enterinng checkin date field");
+           
+           //adult,child,infant
+           driver.findElement(By.xpath("//div[@id='flights']//div[contains(@class,'row gap-5')]//div[1]//div[1]//div[2]//div[1]//span[3]//button[1]")).click();    
+           driver.findElement(By.xpath("//div[@id='flights']//div[contains(@class,'row gap-10 mb-15 align-items-end')]//div[2]//div[1]//div[2]//div[1]//span[3]//button[1]")).click(); 
+           driver.findElement(By.xpath("//*[@id=\"flights\"]/div/div/form/div/div[2]/div[3]/div/div/div[3]/div/div[2]/div/span[3]/button[1]")).click(); 
+           driver.findElement(By.xpath("//button[contains(@class,'btn-primary btn btn-block')]")).click(); 
+           log.info("clicking on adult,child,infant");
+           
+           //TO VERIFY  THE RESULT
+           String Verify=driver.findElement(By.xpath("/html/body/div[1]/div[1]/div[1]/section/div/div[2]/div/div/div/div[1]/h3")).getText();
+           System.out.println(Verify);
+           if(Verify.equalsIgnoreCase(prop.getProperty("TName")))
+           {
+           	System.out.println("pass");
+           }
+              
+           else
+           {
+           	System.out.println("fail");
+           }
+           
+       }
 }
+           
+           
+                                 
+          
+        
+
+
+
+
+

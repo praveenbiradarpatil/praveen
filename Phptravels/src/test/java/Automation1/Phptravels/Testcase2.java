@@ -1,21 +1,29 @@
 package Automation1.Phptravels;
 
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
-public class Testcase2 extends Homepage {
+public class Testcase2 extends Launch {
 		Launch l1=new Launch();
-		Loginpage log=new Loginpage();
-				
-	
+		Homepage h1=new Homepage();
+		Loginpage log1=new Loginpage();
+					
+	   @Test
+	    public void test1() throws Exception  {
+		   l1.Lounchbrowser();
+		 h1.login();
+		 log1.register();
+	     
+	   }
+	   
+		 @AfterTest
+		 public void close() throws Exception
+		 {
+			 
+			 driver.close();
+		 }
+	}
 
-	@Test
-	public void test1() throws Exception  {
-		
-		 l1.Lounchbrowser();	
-	      log.register();
-	
-	}
-	}
 	
 
 
